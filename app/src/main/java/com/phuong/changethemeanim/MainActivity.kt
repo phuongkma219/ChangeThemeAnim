@@ -21,7 +21,8 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun setViewOnClick() {
-        binding.image.setOnClickListener {
+        binding.image.setOnClickListener{
+
             toggleDarkMode()
 
             // Chuyển đổi giữa chủ đề sáng và tối
