@@ -2,7 +2,9 @@ package com.phuong.changethemeanim
 
 import android.animation.Animator
 import android.os.Bundle
+import android.util.Log
 import android.view.ViewAnimationUtils
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.ViewCompat
@@ -11,20 +13,20 @@ import com.phuong.changethemeanim.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private val viewModel by viewModels<MainViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.viewModel = viewModel
         setViewOnClick()
     }
 
 
     private fun setViewOnClick() {
         binding.image.setOnClickListener{
-
             toggleDarkMode()
-
             // Chuyển đổi giữa chủ đề sáng và tối
 
             // Lấy tọa độ trung tâm của ImageView
@@ -58,10 +60,12 @@ class MainActivity : AppCompatActivity() {
         when (currentNightMode) {
             android.content.res.Configuration.UI_MODE_NIGHT_NO -> {
                 // Chuyển sang chủ đề tối
+                viewModel.isLightMode = false
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
             }
             android.content.res.Configuration.UI_MODE_NIGHT_YES -> {
                 // Chuyển sang chủ đề sáng
+                viewModel.isLightMode = true
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             }
         }
